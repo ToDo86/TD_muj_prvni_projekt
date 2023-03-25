@@ -4,7 +4,6 @@ author: Tomas Dolezel
 email: tomas.dolezel@sykorait.com
 discord: TomasDo#3697
 """
-
 ##################################################################################################################################
 TEXTS = ['''
 Situated about 10 miles west of Kemmerer,
@@ -33,3 +32,42 @@ other freshwater genera and herring similar to those
 in modern oceans. Other fish such as paddlefish,
 garpike and stingray are also present.
 ''']
+
+users = ('bob', 'ann', 'mike', 'liz')
+passwords = ('123', 'pass123', 'password123', 'pass123' )
+separator = "=" * 50
+separator2 = "-" * 50
+#################################################################################################################################
+
+print('Vitejte v nasem Textovem analyzatoru SUPERTEXT2023')
+print(separator)
+
+regUsers = dict(zip(users, passwords))
+
+userName = input('Nejdrive prosim zadejte Vase uzivatelske jmeno: ')
+
+if userName in regUsers:
+    userPassword = input('Vas uzivatel existuje. Pokracujte zadanim Vaseho hesla: ')
+    if regUsers['bob'] == userPassword:
+        print('Vitejte v nasi aplikaci, ' + str.title(userName))
+        print('Nabizime tri texty k analyze:' + str(TEXTS))
+        print(separator2)
+    elif regUsers['ann'] == userPassword:
+        print('Vitejte v nasi aplikaci, ' + str.title(userName))
+        print('Nabizime tri texty k analyze:' + str(TEXTS))
+        print(separator2)
+    elif regUsers['mike'] == userPassword:
+        print('Vitejte v nasi aplikaci, ' + str.title(userName))
+        print('Nabizime tri texty k analyze:' + str(TEXTS))
+        print(separator2)
+    elif regUsers['liz'] == userPassword:
+        print('Vitejte v nasi aplikaci, ' + str.title(userName))
+        print('Nabizime tri texty k analyze:' + str(TEXTS))
+        print(separator2)
+    else:
+        print('Vase heslo je spatne. Pristup zamitnut')
+else:
+    print('Je nam lito. Zadany uzivatel neexistuje. Pristup zamitnut')
+
+#print(reg_users)
+
