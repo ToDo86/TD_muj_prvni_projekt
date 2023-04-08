@@ -5,6 +5,7 @@ email: tomas.dolezel@sykorait.com
 discord: TomasDo#3697
 """
 ##################################################################################################################################
+
 TEXTS = ['''
 Situated about 10 miles west of Kemmerer,
 Fossil Butte is a ruggedly impressive
@@ -51,6 +52,43 @@ if userName in regUsers:
     if regUsers['bob'] == userPassword:
         print('Vitejte v nasi aplikaci, ' + str.title(userName))
         print('Nabizime tri texty k analyze:' + str(TEXTS))
+        chosenText = int(input('Vyberte cislo od 1 do 3: '))
+        if chosenText >= 1 and chosenText <= 3:
+            textToAnalyse = TEXTS[chosenText - 1] 
+            #print(textToAnalyse)
+            
+            cleanedWords = []
+            
+            for slovo in textToAnalyse.split():
+                cleanWord = slovo.strip(".,!?")
+                cleanedWords.append(cleanWord.lower())
+            #print(cleanedWords)
+            
+            countWords = {}
+            for slovo in cleanedWords:
+                if slovo not in countWords:
+                    countWords[slovo] = 1
+                else:
+                    countWords[slovo] = countWords[slovo] + 1
+            
+            #print(countWords)
+            
+            countValues = sorted(list(countWords.values()), reverse=True)[0:5]
+            print(countValues)
+            
+            topFive = list()
+
+            for count in countWords:
+                if countWords[count] in countValues:
+                    countValues.remove(countWords[count])
+                    topFive.append((countWords[count], count))
+            print(topFive)
+            
+            topFive = sorted(countWords, key=countWords.get, reverse=True)[0: 5]
+            
+
+        else:
+            print('Zadany znak nesplnuje podminky pro vyber. Program ukoncen.')
         print(separator2)
     elif regUsers['ann'] == userPassword:
         print('Vitejte v nasi aplikaci, ' + str.title(userName))
