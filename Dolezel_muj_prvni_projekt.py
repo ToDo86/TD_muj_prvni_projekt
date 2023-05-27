@@ -40,8 +40,10 @@ separator = "=" * 50
 separator2 = "-" * 50
 #################################################################################################################################
 
-print('Vitejte v nasem Textovem analyzatoru SUPERTEXT2023')
-print(separator)
+from pprint import pprint
+
+pprint('Vitejte v nasem Textovem analyzatoru SUPERTEXT2023')
+pprint(separator)
 
 regUsers = dict(zip(users, passwords))
 
@@ -49,63 +51,96 @@ userName = input('Nejdrive prosim zadejte Vase uzivatelske jmeno: ')
 
 if userName in regUsers:
     userPassword = input('Vas uzivatel existuje. Pokracujte zadanim Vaseho hesla: ')
-    if regUsers['bob'] == userPassword:
-        print('Vitejte v nasi aplikaci, ' + str.title(userName))
-        print('Nabizime tri texty k analyze:' + str(TEXTS))
-        chosenText = int(input('Vyberte cislo od 1 do 3: '))
-        if chosenText >= 1 and chosenText <= 3:
-            textToAnalyse = TEXTS[chosenText - 1] 
-            #print(textToAnalyse)
-            
-            cleanedWords = []
-            
-            for slovo in textToAnalyse.split():
-                cleanWord = slovo.strip(".,!?")
-                cleanedWords.append(cleanWord.lower())
-            #print(cleanedWords)
-            
-            countWords = {}
-            for slovo in cleanedWords:
-                if slovo not in countWords:
-                    countWords[slovo] = 1
-                else:
-                    countWords[slovo] = countWords[slovo] + 1
-            
-            #print(countWords)
-            
-            countValues = sorted(list(countWords.values()), reverse=True)[0:5]
-            print(countValues)
-            
-            topFive = list()
+    
+    if userName in regUsers:
+        if regUsers[userName] == userPassword:
+            pprint('Vitejte v nasi aplikaci, ' + str.title(userName))
+            pprint(separator2)
+            chosenText = int(input('Nabizime tri texty k analyze. Vyberte cislo od 1 do 3: '))
+            if chosenText >= 1 and chosenText <= 3:
+                textToAnalyse = TEXTS[chosenText - 1] 
+                #pprint(textToAnalyse)
+                        
+                cleanedWords = []
+                digits = []
+                uppercase = []
+                title = []
+                lowercase = []
+                        
+                for slovo in textToAnalyse.split():
+                    cleanWord = slovo.strip(".,!?:;")             
+                    cleanedWords.append(cleanWord)
+                totalWords = len(cleanedWords)
+                
+                for typSlova in textToAnalyse.split():
+                    cleanWord = typSlova.strip(".,!?:;")
+                    if typSlova.isdigit():
+                        digits.append(cleanWord)
+                    elif typSlova.isupper():
+                        uppercase.append(cleanWord)
+                    elif typSlova.istitle():
+                        title.append(cleanWord)
+                    elif typSlova.islower():
+                        lowercase.append(cleanWord)      
+                    else:
+                        pass
+                countNumbers = len(digits)
+                countUppers = len(uppercase)
+                countTitles = len(title)
+                countlowerCases = len(lowercase)
 
-            for count in countWords:
-                if countWords[count] in countValues:
-                    countValues.remove(countWords[count])
-                    topFive.append((countWords[count], count))
-            print(topFive)
-            
-            topFive = sorted(countWords, key=countWords.get, reverse=True)[0: 5]
-            
+                pprint(f"""
+                {separator2} Pocet cisel v textu je {countNumbers}.
+                Pocet slov s velkym pocatecnim pismenem je {countTitles}.
+                Pocet slov s pocatecnim malym pismenem je {countlowerCases}.
+                Pocet slov s velkymi pismeny je {countUppers}.{separator2}
+                """)   
+                #pprint(countUppers)
+                #pprint(countTitles)
+                #pprint(lowercase)                
+                #pprint(lowercase)
+                #pprint(uppercase)
 
+
+
+                pprint(totalWords)
+                #pprint(cleanedWords)
+                        
+                countWords = {}
+                for slovo in cleanedWords:
+                    if slovo not in countWords:
+                        countWords[slovo] = 1
+                    else:
+                        countWords[slovo] = countWords[slovo] + 1
+                        
+                #pprint(countWords)
+              
+                countValues = sorted(list(countWords.values()), reverse=True)[0:5]
+                pprint(countValues)
+                        
+                topFive = list()
+
+                for count in countWords:
+                    if countWords[count] in countValues:
+                        countValues.remove(countWords[count])
+                        topFive.append((countWords[count], count))
+                pprint(topFive)
+                        
+                #topFive = sorted(countWords, key=countWords.get, reverse=True)[0: 5]
+
+                separator3 = "+--+------------+--+"
+                
+                for index, par in enumerate(sorted(topFive, reverse=True), 1):
+                    print(separator3, f"|{index}.|{par[1]: ^10}|{par[0]}x|", separator3, sep="\n")
+                
+                
+
+                    
+            else:
+                pprint('Je nam lito. Muzete vkladat pouze cislice 1, 2 nebo 3. Program ukoncen.')
+                pprint(separator2)
         else:
-            print('Zadany znak nesplnuje podminky pro vyber. Program ukoncen.')
-        print(separator2)
-    elif regUsers['ann'] == userPassword:
-        print('Vitejte v nasi aplikaci, ' + str.title(userName))
-        print('Nabizime tri texty k analyze:' + str(TEXTS))
-        print(separator2)
-    elif regUsers['mike'] == userPassword:
-        print('Vitejte v nasi aplikaci, ' + str.title(userName))
-        print('Nabizime tri texty k analyze:' + str(TEXTS))
-        print(separator2)
-    elif regUsers['liz'] == userPassword:
-        print('Vitejte v nasi aplikaci, ' + str.title(userName))
-        print('Nabizime tri texty k analyze:' + str(TEXTS))
-        print(separator2)
-    else:
-        print('Vase heslo je spatne. Pristup zamitnut')
+            pprint('Je nam lito. Vase heslo neni spravne. Program ukoncen.')
 else:
-    print('Je nam lito. Zadany uzivatel neexistuje. Pristup zamitnut')
-
-#print(reg_users)
+    pprint('Je nam lito. Zadany uzivatel neexistuje. Pristup zamitnut')
 
